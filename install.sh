@@ -1,27 +1,27 @@
 #!/bin/bash
 set -e
-#apt install -y sudo 
-#sudo apt-get update -y
-#sudo apt-get upgrade -y
-## you might have to update your outdated clang
-#sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-#sudo apt-get update -y
-#sudo apt-get install -y gcc-7 g++-7 clang-3.9 git
-#export CXX="clang++-3.9" && export CC="clang-3.9"
-#
-## install mapnik
-#cd ~
-#rm -rf mapnik
-#git clone https://github.com/mapnik/mapnik mapnik --depth 10
-#cd mapnik
-##git checkout c6fc956a7
-#git submodule update --init
-#sudo apt-get install -y python zlib1g-dev clang make pkg-config curl
-#source bootstrap.sh
-#./configure CUSTOM_CXXFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0" CXX=${CXX} CC=${CC}
-#JOBS=2 make
-##make test
-#sudo make install
+apt install -y sudo 
+sudo apt-get update -y
+sudo apt-get upgrade -y
+# you might have to update your outdated clang
+sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+sudo apt-get update -y
+sudo apt-get install -y gcc-7 g++-7 clang-3.9 git
+export CXX="clang++-3.9" && export CC="clang-3.9"
+
+# install mapnik
+cd ~
+rm -rf mapnik
+git clone https://github.com/mapnik/mapnik mapnik --depth 10
+cd mapnik
+git checkout c6fc956a7
+git submodule update --init
+sudo apt-get install -y python zlib1g-dev clang make pkg-config curl
+source bootstrap.sh
+./configure CUSTOM_CXXFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0" CXX=${CXX} CC=${CC}
+JOBS=2 make
+#make test
+sudo make install
 
 cd ~
 rm -rf test-project
