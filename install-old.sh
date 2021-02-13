@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+echo "start at `date`"
 apt install -y sudo 
 sudo apt-get update -y
 sudo apt-get upgrade -y
@@ -32,6 +33,7 @@ cd ~
 rm -rf mapnik
 git clone https://github.com/mapnik/mapnik --depth 10
 cd mapnik
+git checkout c6fc956a7
 git submodule update --init
 ./configure
 make 
