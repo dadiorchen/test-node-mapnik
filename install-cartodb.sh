@@ -33,48 +33,54 @@ cd ~
 rm -rf mapnik
 git clone https://github.com/mapnik/mapnik --depth 10
 cd mapnik
-git checkout c6fc956a7
+git fetch --all --tags
+#git checkout tags/v3.0.15
+#use version which is a bit newer then 3.0.15, it's 3.0.19 or so
+git checkout 2f28d98
 git submodule update --init
 ./configure
-JOSBS=2 make 
+JOBS=2 make 
 sudo make install
 
 
 cd ~
-rm -rf test-project
-mkdir -p test-project
-cd test-project
+rm -rf node-mapnik
+git clone https://github.com/CartoDB/node-mapnik.git
+cd node-mapnik
 
-cat > package.json <<EOF
-{
-    "dependencies": {
-        "mapnik": "4.5.5"  
-    }
-}
-EOF
-# note: node-mapnik version "^3.7.2" works against mapnik v3.0.x branch
-
-npm i --build-from-source=mapnik
+make release_base
 
 cat > index.js <<EOF
-const mapnik = require('mapnik')
+const mapnik = require('.')
 
 console.log(process.env.PGSSLMODE)
 
 mapnik.register_default_input_plugins()
 
-new mapnik.Datasource({
+const ds = new mapnik.Datasource({
     'type': 'postgis',
-    'host': '172.17.0.3',
-    'dbname': 'postgres',
-    'user': 'postgres',
-    'password': 'mysecretpassword',
-    'port': 5432,
+    'host': 'db-postgresql-sfo2-nextgen-do-user-1067699-0.db.ondigitalocean.com',
+    'dbname': 'treetracker_dev',
+    'user': 'doadmin',
+    'password': 'l5al4hwte8qmj6x8',
+    'port': 25060,
     'table': 'trees',
-    'geometry_field': 'geom',
+    'geometry_field': 'estimated_geometric_location',
     'extent': '-20005048,-9039211,19907487,17096598'
 })
+//const ds = new mapnik.Datasource({
+//    'type': 'postgis',
+//    'host': '172.17.0.3',
+//    'dbname': 'postgres',
+//    'user': 'postgres',
+//    'password': 'mysecretpassword',
+//    'port': 5432,
+//    'table': 'trees',
+//    'geometry_field': 'the_geom',
+//    'extent': '-20005048,-9039211,19907487,17096598'
+//})
+console.log("db:", ds);
 EOF
 
-node index.js
+#node index.js
 PGSSLMODE=require node index.js
