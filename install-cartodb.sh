@@ -57,17 +57,6 @@ console.log(process.env.PGSSLMODE)
 
 mapnik.register_default_input_plugins()
 
-const ds = new mapnik.Datasource({
-    'type': 'postgis',
-    'host': 'db-postgresql-sfo2-nextgen-do-user-1067699-0.db.ondigitalocean.com',
-    'dbname': 'treetracker_dev',
-    'user': 'doadmin',
-    'password': 'l5al4hwte8qmj6x8',
-    'port': 25060,
-    'table': 'trees',
-    'geometry_field': 'estimated_geometric_location',
-    'extent': '-20005048,-9039211,19907487,17096598'
-})
 //const ds = new mapnik.Datasource({
 //    'type': 'postgis',
 //    'host': '172.17.0.3',
